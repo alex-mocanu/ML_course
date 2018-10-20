@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """some helper functions."""
 import numpy as np
+from random import random as rand
 
 
 def load_data(sub_sample=True, add_outlier=False):
@@ -23,9 +24,19 @@ def load_data(sub_sample=True, add_outlier=False):
         weight = weight[::50]
 
     if add_outlier:
+        nr_outliers = 2
         # outlier experiment
-        height = np.concatenate([height, [1.1, 1.2]])
-        weight = np.concatenate([weight, [51.5/0.454, 55.3/0.454]])
+        # height = np.concatenate([height, [1.1, 1.2]])
+        # weight = np.concatenate([weight, [51.5/0.454, 55.3/0.454]])
+        rand_h = np.zeros(nr_outliers)
+        rand_w = np.zeros(nr_outliers)
+        for i in range(nr_outliers):
+            new_h = 1 + 2 * rand()
+            new_w = 50 + rand() * 5
+            rand_h[i] = new_h
+            rand_w[i] = new_w
+        height = np.append(height, rand_h)
+        weight = np.append(weight, rand_w)
 
     return height, weight, gender
 
